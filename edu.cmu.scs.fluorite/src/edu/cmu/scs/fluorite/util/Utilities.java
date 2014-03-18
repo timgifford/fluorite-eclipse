@@ -530,9 +530,10 @@ public class Utilities {
 			attrs = new HashMap<String, String>();
 		}
 
+		
 		// Add common attributes
-		attrs.put("__id", Integer.toString(command.getCommandIndex()));
-		attrs.put("_type", command.getCommandType());
+		attrs.put(EventRecorder.XML_ID_Tag, Integer.toString(command.getCommandIndex()));
+		attrs.put(EventRecorder.XML_CommandType_ATTR, command.getCommandType());
 		attrs.put("timestamp", Long.toString(command.getTimestamp()));
 		if (command.getRepeatCount() > 1) {
 			attrs.put("timestamp2", Long.toString(command.getTimestamp2()));

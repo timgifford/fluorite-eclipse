@@ -39,7 +39,9 @@ public class FluoriteXMLFormatter extends Formatter {
 
 		return versionStr;
 	}
-
+	
+	
+	
 	@Override
 	public String format(LogRecord rec) {
 		Object[] params = rec.getParameters();
@@ -75,6 +77,12 @@ public class FluoriteXMLFormatter extends Formatter {
 	@Override
 	public String getTail(Handler h) {
 		return "</Events>" + Utilities.NewLine;
+	}
+
+
+
+	public String getCalculateVersion() {
+		return mLogVersion;
 	}
 
 }
