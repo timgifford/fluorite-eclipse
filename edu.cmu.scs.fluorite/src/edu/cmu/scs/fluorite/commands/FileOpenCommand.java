@@ -16,6 +16,8 @@ import org.w3c.dom.NodeList;
 
 import edu.cmu.scs.fluorite.model.EventRecorder;
 import edu.cmu.scs.fluorite.model.FileSnapshotManager;
+import edu.cmu.scs.fluorite.plugin.Activator;
+import edu.cmu.scs.fluorite.preferences.Initializer;
 import edu.cmu.scs.fluorite.util.Utilities;
 
 public class FileOpenCommand extends BaseDocumentChangeEvent {
@@ -95,10 +97,16 @@ public class FileOpenCommand extends BaseDocumentChangeEvent {
 	public Map<String, String> getDataMap() {
 		Map<String, String> dataMap = new HashMap<String, String>();
 		dataMap.put("filePath", mFilePath == null ? "null" : mFilePath);
-		if (mSnapshot != null) {
-			dataMap.put("snapshot", mSnapshot);
+		
+		if (Activator.getDefault().getPreferenceStore()
+				.getBoolean(Initializer.Pref_LogFileContents)) {
+		
+			if (mSnapshot != null) {
+				dataMap.put("snapshot", mSnapshot);
+			}
+			
 		}
-
+		
 		return dataMap;
 	}
 
