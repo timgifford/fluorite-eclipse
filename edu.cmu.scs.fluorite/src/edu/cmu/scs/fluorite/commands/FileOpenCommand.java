@@ -1,5 +1,7 @@
 package edu.cmu.scs.fluorite.commands;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +23,17 @@ import edu.cmu.scs.fluorite.preferences.Initializer;
 import edu.cmu.scs.fluorite.util.Utilities;
 
 public class FileOpenCommand extends BaseDocumentChangeEvent {
+
+	public FileOpenCommand(){
+		
+	}
 	
-	public FileOpenCommand() {
+	public FileOpenCommand(IEditorPart editor) {
+		this(editor, PluginPreferences.createFromActivator());
 	}
 
-	public FileOpenCommand(IEditorPart editor) {
+	public FileOpenCommand(IEditorPart editor, PluginPreferences preferences) {
+		this.pluginPreferences = preferences;
 		initialize(editor);
 	}
 
@@ -64,6 +72,7 @@ public class FileOpenCommand extends BaseDocumentChangeEvent {
 	private String mProjectName;
 	private String mSnapshot;
 	private String mPrevSnapshot;
+	private PluginPreferences pluginPreferences;
 
 	public boolean execute(IEditorPart target) {
 		// Not supported yet
@@ -98,8 +107,7 @@ public class FileOpenCommand extends BaseDocumentChangeEvent {
 		Map<String, String> dataMap = new HashMap<String, String>();
 		dataMap.put("filePath", mFilePath == null ? "null" : mFilePath);
 		
-		if (Activator.getDefault().getPreferenceStore()
-				.getBoolean(Initializer.Pref_LogFileContents)) {
+		if (pluginPreferences.isLogFileContentsEnabled()) {
 		
 			if (mSnapshot != null) {
 				dataMap.put("snapshot", mSnapshot);
@@ -209,5 +217,13 @@ public class FileOpenCommand extends BaseDocumentChangeEvent {
 	@Override
 	public double getY2() {
 		return 100;
+	}
+
+	public void setPluginPreferences(PluginPreferences pluginPreferences) {
+		this.pluginPreferences = pluginPreferences;
+	}
+
+	public void setSnapshot(String value) {
+		this.mSnapshot = value;
 	}
 }
