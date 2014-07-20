@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -605,7 +607,7 @@ public class Utilities {
 		
 		Map<String, String> attrMap = treeCommand.getAttrMap(element);
 		for (String attrKey : attrMap.keySet()) {
-			buf.append(" " + attrKey + "=\"" + attrMap.get(attrKey) + "\"");
+			buf.append(" " + attrKey + "=\"" + StringEscapeUtils.escapeHtml4(attrMap.get(attrKey)) + "\"");
 		}
 		
 		Object[] children = treeCommand.getChildren(element);

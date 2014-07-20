@@ -1,13 +1,11 @@
 package edu.cmu.scs.fluorite.util;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Map;
 
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.internal.junit.model.TestElement;
 import org.eclipse.jdt.internal.junit.model.TestRoot;
 import org.eclipse.jdt.internal.junit.model.TestRunSession;
 import org.eclipse.jdt.junit.model.ITestElement;
@@ -17,7 +15,6 @@ import org.junit.Test;
 
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.JUnitCommand;
-import edu.cmu.scs.fluorite.util.Utilities;;
 public class UtilityTest {
 
 	@Test
