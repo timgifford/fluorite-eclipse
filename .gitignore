@@ -5,5 +5,5 @@ target/
 .idea/
 */*.iml
 */*.jar
-.classpath
 .DS_Store
+.idea/

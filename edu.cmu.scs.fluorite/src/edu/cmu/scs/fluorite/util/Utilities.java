@@ -523,6 +523,11 @@ public class Utilities {
 			Map<String, String> data, ICommand command) {
 		StringBuffer buf = new StringBuffer();
 
+		return persistCommand(buf, attrs, data, command);
+	}
+
+	public static String persistCommand(StringBuffer buf,
+			Map<String, String> attrs, Map<String, String> data, ICommand command) {
 		// Opening Tag
 		buf.append("  <" + command.getCommandTag());
 
