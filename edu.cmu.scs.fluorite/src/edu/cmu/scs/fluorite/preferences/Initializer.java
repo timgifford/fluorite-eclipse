@@ -37,7 +37,7 @@ public class Initializer extends AbstractPreferenceInitializer {
 		preferenceStore.setDefault(Pref_ShowConsole, false);
 		preferenceStore.setDefault(Pref_WriteToConsole, false);
 
-		preferenceStore.setDefault(Pref_LogFileContents, true);
+		preferenceStore.setDefault(Pref_LogFileContents, false);
 		
 		preferenceStore.setDefault(Pref_CombineCommands, true);
 		preferenceStore.setDefault(Pref_CombineTimeThreshold, 2000);
