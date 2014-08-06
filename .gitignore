@@ -1,4 +1,9 @@
 bin/
 target/
 .settings/
+.classpath/
+.idea/
+*/*.iml
 */*.jar
+.DS_Store
+.idea/

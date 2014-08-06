@@ -12,6 +12,13 @@
     <relativePath>../edu.cmu.scs.fluorite.parent</relativePath>
   </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+
   <repositories>
     <repository>
       <id>Orbit</id>

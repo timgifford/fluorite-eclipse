@@ -1,5 +1,6 @@
 package edu.cmu.scs.fluorite.dialogs;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -24,6 +25,7 @@ public class OptionsPage extends PreferencePage implements
 	private Button mEnableEventLogger;
 	private Button mShowConsole;
 	private Button mWriteToConsole;
+	private Button mLogFileWhenOpened;
 
 	private Button mCombineCommands;
 	private Text mCombineThreshold;
@@ -75,6 +77,8 @@ public class OptionsPage extends PreferencePage implements
 				.getPreferenceStore()
 				.getBoolean(Initializer.Pref_WriteToConsole));
 
+		createCollectFileText(comp);
+		
 		mCombineCommands = new Button(comp, SWT.CHECK);
 		mCombineCommands.setText("Combine multiple commands of same type");
 		mCombineCommands.setSelection(Activator.getDefault()
@@ -120,36 +124,42 @@ public class OptionsPage extends PreferencePage implements
 		return comp;
 	}
 
+	private void createCollectFileText(Composite comp) {
+		mLogFileWhenOpened = new Button(comp, SWT.CHECK);
+		mLogFileWhenOpened.setText("Log file contents");
+		mLogFileWhenOpened
+				.setToolTipText("If set, logs file contents when the file is opened.");
+		mLogFileWhenOpened.setSelection(Activator.getDefault()
+				.getPreferenceStore()
+				.getBoolean(Initializer.Pref_LogFileContents));
+	}
+
 	public void init(IWorkbench workbench) {
 		// nothing to do
 	}
 
 	@Override
 	public boolean performOk() {
-		Activator
+		IPreferenceStore preferenceStore = Activator
 				.getDefault()
-				.getPreferenceStore()
+				.getPreferenceStore();
+		preferenceStore
 				.setValue(Initializer.Pref_EnableEventLogger,
 						mEnableEventLogger.getSelection());
-		Activator
-				.getDefault()
-				.getPreferenceStore()
+		preferenceStore
 				.setValue(Initializer.Pref_ShowConsole,
 						mShowConsole.getSelection());
-		Activator
-				.getDefault()
-				.getPreferenceStore()
+	
+		preferenceStore.setValue(Initializer.Pref_LogFileContents, mLogFileWhenOpened.getSelection());
+		
+		preferenceStore
 				.setValue(Initializer.Pref_WriteToConsole,
 						mWriteToConsole.getSelection());
 
-		Activator
-				.getDefault()
-				.getPreferenceStore()
+		preferenceStore
 				.setValue(Initializer.Pref_CombineCommands,
 						mCombineCommands.getSelection());
-		Activator
-				.getDefault()
-				.getPreferenceStore()
+		preferenceStore
 				.setValue(Initializer.Pref_CombineTimeThreshold,
 						Integer.parseInt(mCombineThreshold.getText()));
 		EventRecorder.getInstance().setCombineCommands(
@@ -157,26 +167,18 @@ public class OptionsPage extends PreferencePage implements
 		EventRecorder.getInstance().setCombineTimeThreshold(
 				Integer.parseInt(mCombineThreshold.getText()));
 
-		Activator
-				.getDefault()
-				.getPreferenceStore()
+		preferenceStore
 				.setValue(Initializer.Pref_LogInsertedText,
 						mLogInsertedText.getSelection());
-		Activator
-				.getDefault()
-				.getPreferenceStore()
+		preferenceStore
 				.setValue(Initializer.Pref_LogDeletedText,
 						mLogDeletedText.getSelection());
 
-		Activator
-				.getDefault()
-				.getPreferenceStore()
+		preferenceStore
 				.setValue(Initializer.Pref_LogTopBottomLines,
 						mLogTopBottomLines.getSelection());
 
-		Activator
-				.getDefault()
-				.getPreferenceStore()
+		preferenceStore
 				.setValue(Initializer.Pref_LogMouseWheel,
 						mLogMouseWheel.getSelection());
 
@@ -185,33 +187,30 @@ public class OptionsPage extends PreferencePage implements
 
 	@Override
 	protected void performDefaults() {
-		mEnableEventLogger.setSelection(Activator.getDefault()
-				.getPreferenceStore()
+		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+		mEnableEventLogger.setSelection(preferenceStore
 				.getDefaultBoolean(Initializer.Pref_EnableEventLogger));
-		mShowConsole.setSelection(Activator.getDefault().getPreferenceStore()
+		mShowConsole.setSelection(preferenceStore
 				.getDefaultBoolean(Initializer.Pref_ShowConsole));
-		mWriteToConsole.setSelection(Activator.getDefault()
-				.getPreferenceStore()
+		
+		mLogFileWhenOpened.setSelection(preferenceStore.getDefaultBoolean(Initializer.Pref_LogFileContents));
+		
+		mWriteToConsole.setSelection(preferenceStore
 				.getDefaultBoolean(Initializer.Pref_WriteToConsole));
 
-		mCombineCommands.setSelection(Activator.getDefault()
-				.getPreferenceStore()
+		mCombineCommands.setSelection(preferenceStore
 				.getDefaultBoolean(Initializer.Pref_CombineCommands));
-		mCombineThreshold.setText(Integer.toString(Activator.getDefault()
-				.getPreferenceStore()
+		mCombineThreshold.setText(Integer.toString(preferenceStore
 				.getDefaultInt(Initializer.Pref_CombineTimeThreshold)));
 
-		mLogInsertedText.setSelection(Activator.getDefault()
-				.getPreferenceStore()
+		mLogInsertedText.setSelection(preferenceStore
 				.getDefaultBoolean(Initializer.Pref_LogInsertedText));
-		mLogDeletedText.setSelection(Activator.getDefault()
-				.getPreferenceStore()
+		mLogDeletedText.setSelection(preferenceStore
 				.getDefaultBoolean(Initializer.Pref_LogDeletedText));
 
-		mLogTopBottomLines.setSelection(Activator.getDefault()
-				.getPreferenceStore()
+		mLogTopBottomLines.setSelection(preferenceStore
 				.getDefaultBoolean(Initializer.Pref_LogTopBottomLines));
-		mLogMouseWheel.setSelection(Activator.getDefault().getPreferenceStore()
+		mLogMouseWheel.setSelection(preferenceStore
 				.getDefaultBoolean(Initializer.Pref_LogMouseWheel));
 
 		super.performDefaults();

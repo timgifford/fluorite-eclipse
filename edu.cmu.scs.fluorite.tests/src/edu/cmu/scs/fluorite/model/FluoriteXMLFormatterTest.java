@@ -45,5 +45,4 @@ public class FluoriteXMLFormatterTest {
 	public void logHeadMustContainLineSeparator() {
 		assertThat(mHead, containsString("lineSeparator="));
 	}
-
 }

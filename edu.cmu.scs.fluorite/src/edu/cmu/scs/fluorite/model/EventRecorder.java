@@ -48,12 +48,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import edu.cmu.scs.fluorite.actions.FindAction;
+import edu.cmu.scs.fluorite.commands.AnnotateCommand;
 import edu.cmu.scs.fluorite.commands.BaseDocumentChangeEvent;
 import edu.cmu.scs.fluorite.commands.FileOpenCommand;
 import edu.cmu.scs.fluorite.commands.FindCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.MoveCaretCommand;
 import edu.cmu.scs.fluorite.commands.SelectTextCommand;
+import edu.cmu.scs.fluorite.dialogs.AddAnnotationDialog;
 import edu.cmu.scs.fluorite.preferences.Initializer;
 import edu.cmu.scs.fluorite.recorders.CompletionRecorder;
 import edu.cmu.scs.fluorite.recorders.DocumentRecorder;
@@ -399,7 +401,7 @@ public class EventRecorder {
 			mScheduledTasks.add(runnable);
 		}
 	}
-
+	
 	public void start() {
 		EventLoggerConsole.getConsole().writeln("***Started macro recording",
 				EventLoggerConsole.Type_RecordingCommand);
@@ -516,6 +518,7 @@ public class EventRecorder {
 	private boolean mIncrementalFindMode = false;
 	private boolean mIncrementalFindForward = true;
 	private Listener mIncrementalListener = null;
+
 
 	public IEditorPart getEditor() {
 		return mEditor;

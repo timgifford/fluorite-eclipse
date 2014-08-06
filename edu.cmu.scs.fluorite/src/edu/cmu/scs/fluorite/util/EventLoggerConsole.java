@@ -79,6 +79,24 @@ public class EventLoggerConsole extends IOConsole {
 			return;
 		}
 
+		showConsole();
+
+		IOConsoleOutputStream outputStream = mConsole.newOutputStream();
+		configureStream(outputStream, type);
+		try {
+			outputStream.write(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				outputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void showConsole() {
 		if (Activator.getDefault().getPreferenceStore()
 				.getBoolean(Initializer.Pref_ShowConsole)) {
 			try {
@@ -103,20 +121,6 @@ public class EventLoggerConsole extends IOConsole {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		IOConsoleOutputStream outputStream = mConsole.newOutputStream();
-		configureStream(outputStream, type);
-		try {
-			outputStream.write(data);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				outputStream.close();
-			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}

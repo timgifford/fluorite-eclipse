@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -523,6 +525,11 @@ public class Utilities {
 			Map<String, String> data, ICommand command) {
 		StringBuffer buf = new StringBuffer();
 
+		return persistCommand(buf, attrs, data, command);
+	}
+
+	public static String persistCommand(StringBuffer buf,
+			Map<String, String> attrs, Map<String, String> data, ICommand command) {
 		// Opening Tag
 		buf.append("  <" + command.getCommandTag());
 
@@ -530,9 +537,10 @@ public class Utilities {
 			attrs = new HashMap<String, String>();
 		}
 
+		
 		// Add common attributes
-		attrs.put("__id", Integer.toString(command.getCommandIndex()));
-		attrs.put("_type", command.getCommandType());
+		attrs.put(EventRecorder.XML_ID_Tag, Integer.toString(command.getCommandIndex()));
+		attrs.put(EventRecorder.XML_CommandType_ATTR, command.getCommandType());
 		attrs.put("timestamp", Long.toString(command.getTimestamp()));
 		if (command.getRepeatCount() > 1) {
 			attrs.put("timestamp2", Long.toString(command.getTimestamp2()));
@@ -599,7 +607,7 @@ public class Utilities {
 		
 		Map<String, String> attrMap = treeCommand.getAttrMap(element);
 		for (String attrKey : attrMap.keySet()) {
-			buf.append(" " + attrKey + "=\"" + attrMap.get(attrKey) + "\"");
+			buf.append(" " + attrKey + "=\"" + StringEscapeUtils.escapeHtml4(attrMap.get(attrKey)) + "\"");
 		}
 		
 		Object[] children = treeCommand.getChildren(element);
